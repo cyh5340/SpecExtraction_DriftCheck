@@ -1,5 +1,5 @@
 def greet(name):
-    return f"Hello, {name}!"
+    return f"Hi, {name}."
 
 
 def normalize_email(email):
