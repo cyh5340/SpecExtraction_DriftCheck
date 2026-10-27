@@ -11,8 +11,4 @@ def percent(part, whole):
 
 
 def clamp(x, lo, hi):
-    if x < lo:
-        return lo
-    if x > hi:
-        return hi
-    return x
+    return max(lo, min(x, hi))
