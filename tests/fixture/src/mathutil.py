@@ -7,7 +7,7 @@ def average(nums):
 
 
 def percent(part, whole):
-    return round(part / whole * 100, 1)
+    return part / whole
 
 
 def clamp(x, lo, hi):
