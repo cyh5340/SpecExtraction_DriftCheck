@@ -1,0 +1,10 @@
+{
+  "tests/fixture/src/mathutil.py::add":           {"verdict": "OK",       "spec_source": "doc",      "case": "docs first, matching impl, never modified (hash skip); feature-branch WIP was wrong but never merged"},
+  "tests/fixture/src/mathutil.py::average":       {"verdict": "DRIFT",    "spec_source": "doc",      "reason": "first_version_mismatch", "case": "docs say empty list -> 0; first merged version raises ZeroDivisionError"},
+  "tests/fixture/src/mathutil.py::percent":       {"verdict": "DRIFT",    "spec_source": "doc",      "reason": "modified_after_merge",   "case": "changed to return a 0-1 fraction; docs untouched"},
+  "tests/fixture/src/mathutil.py::clamp":         {"verdict": "BASELINE", "spec_source": "baseline", "case": "no docs; refactored later with same behavior"},
+  "tests/fixture/src/text.py::greet":             {"verdict": "OK",       "spec_source": "doc",      "case": "code and docs updated in the same commit"},
+  "tests/fixture/src/text.py::normalize_email":   {"verdict": "DRIFT",    "spec_source": "baseline", "reason": "modified_after_merge",   "case": "no docs; stopped lowercasing after first version"},
+  "tests/fixture/src/text.py::parse_bool":        {"verdict": "DRIFT",    "spec_source": "comment",  "reason": "modified_after_merge",   "case": "docstring says case-insensitive; changed to case-sensitive, docstring untouched"},
+  "tests/fixture/src/strings.js::truncate":       {"verdict": "DRIFT",    "spec_source": "doc",      "reason": "modified_after_merge",   "case": "JS; docs arrived in same merge as code; suffix changed to unicode ellipsis, docs untouched"}
+}
