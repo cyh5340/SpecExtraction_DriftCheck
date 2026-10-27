@@ -3,7 +3,7 @@ def greet(name):
 
 
 def normalize_email(email):
-    return email.strip().lower()
+    return email.strip()
 
 
 def parse_bool(value):
