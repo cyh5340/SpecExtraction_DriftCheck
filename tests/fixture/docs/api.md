@@ -10,7 +10,7 @@
 `percent(part, whole)` returns `part / whole` as a percentage from 0 to 100, rounded to 1 decimal place.
 
 ## greet
-`greet(name)` returns `"Hello, <name>!"`.
+`greet(name)` returns `"Hi, <name>."`.
 
 ## truncate
 `truncate(str, n)` returns `str` unchanged if it has at most `n` characters, otherwise its first `n` characters followed by `"..."`.
