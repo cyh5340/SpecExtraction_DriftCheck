@@ -93,8 +93,21 @@ Docstring timestamps come from the function's own commit history, so `git blame`
 - [x] Deterministic signature check before calling Jev (baseline path)
 - [x] Jev Noul: `state = {spec: {text}, code: {name, source}}`, asking whether `code.source` behaves as `spec.text` describes; the answer is the yes-probability
 - [x] Probability to verdict: ≥ 0.7 match, ≤ 0.3 `DRIFT`, in between `UNKNOWN`
-- [ ] Tune the thresholds on more labeled cases (only one run on 8 functions so far)
-- [ ] Fix the `tests/fixture/src/strings.js::truncate` failure in `python tests/check_fixture.py`: expected `DRIFT` (`modified_after_merge`), got `UNKNOWN`. The only change was the truncation suffix `...` → `…` with docs untouched, and Jev's probability was 0.57, then 0.67 (unsure, and different between runs). Try rewording the Jev question/criteria so that any change to output values or text counts as "different", then rerun the check. Lowering thresholds for this one case doesn't count as a fix. Done when the check passes 8/8 on repeated runs.
+- [ ] Tighten the thresholds for code. The 0.7 / 0.3 values are TypeSafe's generic starting point. Code needs much less similarity allowance: behavior either matches the spec or it doesn't, and "mostly matches" is drift. Jev's probabilities from the first real run (`python tests/check_fixture.py`, 2026-10-26):
+
+  | Function | Expected | Jev's probability |
+  |---|---|---|
+  | `mathutil.py::add` | OK | 0.97 |
+  | `mathutil.py::clamp` | BASELINE | 0.97 |
+  | `text.py::greet` | OK | 0.98 |
+  | `mathutil.py::percent` | DRIFT | 0.02 |
+  | `text.py::normalize_email` | DRIFT | 0.03 |
+  | `mathutil.py::average` | DRIFT | 0.04 |
+  | `text.py::parse_bool` | DRIFT | 0.04 (0.05 on the second run) |
+  | `strings.js::truncate` | DRIFT | **0.57, then 0.67** |
+
+  True matches were all ≥ 0.97 and clear mismatches all ≤ 0.05. Candidate: match only at ≥ 0.9 and treat everything below as `DRIFT`. That would drop the `UNKNOWN` band, or narrow it to e.g. 0.85–0.9. On this run it would give 8/8. Check it against more labeled cases before adopting, and record each run's probabilities here.
+- [ ] Fix the `tests/fixture/src/strings.js::truncate` failure in `python tests/check_fixture.py`: expected `DRIFT` (`modified_after_merge`), got `UNKNOWN`. The only change was the truncation suffix `...` → `…` with docs untouched, and Jev's probability was 0.57, then 0.67 (unsure, and different between runs). Two routes: the stricter code thresholds above, and rewording the Jev question/criteria so that any change to output values or text counts as "different". Don't lower thresholds just for this one case. Done when the check passes 8/8 on repeated runs.
 - [x] Jev request errors (400/422, e.g. input too long) give `UNKNOWN` instead of stopping the scan; input is never truncated
 - [x] Skip Jev when neither code nor spec changed since the last check
 
