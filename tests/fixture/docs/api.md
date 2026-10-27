@@ -11,3 +11,6 @@
 
 ## greet
 `greet(name)` returns `"Hello, <name>!"`.
+
+## truncate
+`truncate(str, n)` returns `str` unchanged if it has at most `n` characters, otherwise its first `n` characters followed by `"..."`.
